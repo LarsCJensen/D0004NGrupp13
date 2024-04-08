@@ -34,7 +34,7 @@ CREATE TABLE green_rental.vehicle (
 );
 
 CREATE TABLE green_rental.staff (
-    staffID INT PRIMARY KEY,
+    staffID INT AUTO_INCREMENT PRIMARY KEY,
     stationName VARCHAR(50),
     firstName VARCHAR(50),
     lastName VARCHAR(50),
@@ -49,7 +49,7 @@ CREATE TABLE green_rental.staff (
     FOREIGN KEY (stationName) REFERENCES station(stationName)
 );
 CREATE TABLE green_rental.report (
-    reportID INT PRIMARY KEY,
+    reportID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
     datum DATETIME,
@@ -149,7 +149,7 @@ CREATE TABLE green_rental.contract (
 );
 
 CREATE TABLE green_rental.invoice (
-    invoiceNumber INT PRIMARY KEY,
+    invoiceNumber INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     invoiceSum FLOAT,
     datum DATETIME,
