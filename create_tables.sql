@@ -80,6 +80,7 @@ CREATE TABLE green_rental.damage (
 
 CREATE TABLE green_rental.business_customer (
     orgNumber VARCHAR(11) PRIMARY KEY,
+    name VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
