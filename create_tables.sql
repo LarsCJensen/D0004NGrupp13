@@ -36,8 +36,8 @@ CREATE TABLE green_rental.vehicle (
 CREATE TABLE green_rental.staff (
     staffID INT PRIMARY KEY,
     stationName VARCHAR(50),
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
@@ -95,8 +95,8 @@ CREATE TABLE green_rental.business_customer (
 
 CREATE TABLE green_rental.private_customer (
     personalIdentificationNumber VARCHAR(13) PRIMARY KEY,
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
