@@ -13,24 +13,7 @@
 SHOW DATABASES;
 
 -- Select the Green Rental database;
-USE GreenRental;
-
--- List each table of Green Rental
-DESCRIBE station;
-DESCRIBE staff;
-DESCRIBE Vehicle;
-DESCRIBE VehicleCategory;
-DESCRIBE ErrorReports;
-DESCRIBE Inspection;
-DESCRIBE Damage;
-DESCRIBE Booking;
-DESCRIBE BookingDetails;
-DESCRIBE Invoice;
-DESCRIBE Agreement;
-DESCRIBE Offer;
-DESCRIBE BCustomer;
-DESCRIBE PCustomer;
-
+USE green_rental;
 
 -- Insert station dummy data
 INSERT INTO station (stationName, streetName, zipCode, country, city)
@@ -44,14 +27,28 @@ VALUES ('Linköping station', 'Linköpingsvägen 333', '33333', 'SWE', 'Linköpi
 SELECT * FROM station;
 
 -- Insert staff dummy data
-INSERT INTO staff (firstName, lastName, title, stationId, employmentDate, phoneNo, email, streetName, zipCode, country, employed)
-VALUES ('Emelie', 'W', 'Manager', 1, '2024-01-01', '123-123-123', 'emelie.w@greenrental.com', 'Uppsalavägen 111', '11111', 'SWE', TRUE);
-INSERT INTO staff (firstName, lastName, title, stationId, employmentDate, phoneNo, email, streetName, zipCode, country, employed)
-VALUES ('Ingrid', 'H', 'Manager', 1, '2024-01-01', '123-123-123', 'ingrid.h@greenrental.com', 'Uppsalavägen 111', '11111', 'SWE', TRUE);
-INSERT INTO staff (firstName, lastName, title, stationId, employmentDate, phoneNo, email, streetName, zipCode, country, employed)
-VALUES ('Lars', 'J', 'Manager', 2, '2024-01-01', '123-123-123', 'lars.j@greenrental.com', 'Lundvägen 222', '22222', 'SWE', TRUE);
-INSERT INTO staff (firstName, lastName, title, stationId, employmentDate, phoneNo, email, streetName, zipCode, country, employed)
-VALUES ('Dnyaz', 'AA', 'Manager', 3, '2024-01-01', '123-123-123', 'dnyaz.aa@greenrental.com', 'Linköpingsvägen 333', '33333', 'SWE', TRUE);
+INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
+VALUES ('Emelie', 'W', 'Manager', "Uppsala Station", '2024-01-01', '123-123-123', 'emelie.w@greenrental.com', 'Uppsalavägen 111', '11111', false);
+INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
+VALUES ('Ingrid', 'H', 'Manager', "Uppsala Station", '2024-01-01', '123-123-123', 'ingrid.h@greenrental.com', 'Uppsalavägen 111', '11111', false);
+INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
+VALUES ('Lars', 'J', 'Manager', "Lund station", '2024-01-01', '123-123-123', 'lars.j@greenrental.com', 'Lundvägen 222', '22222', false);
+INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
+VALUES ('Dnyaz', 'AA', 'Manager', "Linköping station", '2024-01-01', '123-123-123', 'dnyaz.aa@greenrental.com', 'Linköpingsvägen 333', '33333', false);
 
 -- Validate the staff entries
 SELECT * FROM staff;
+
+
+-- Insert vehicle_category dummy data
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Stadsbil", "El", true, 2, "", 25, 249);
+
+SELECT * FROM vehicle_category;
+
+
+-- Insert vehicle dummy data
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ABC123", 1, "Uppsala Station", "Smart EQ ForTwo");
+
+SELECT * FROM vehicle;
