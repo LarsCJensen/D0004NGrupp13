@@ -15,6 +15,22 @@ SHOW DATABASES;
 -- Select the Green Rental database;
 USE green_rental;
 
+-- List each table of Green Rental
+DESCRIBE station;
+DESCRIBE staff;
+DESCRIBE vehicle;
+DESCRIBE vehicle_category;
+DESCRIBE report;
+DESCRIBE control;
+DESCRIBE damage;
+DESCRIBE booking;
+DESCRIBE booking_details;
+DESCRIBE invoice;
+DESCRIBE contract;
+DESCRIBE offer;
+DESCRIBE business_customer;
+DESCRIBE private_customer;
+
 -- Insert station dummy data
 INSERT INTO station (stationName, streetName, zipCode, country, city)
 VALUES ('Uppsala station', 'Uppsalavägen 111', '11111', 'SWE', 'Uppsala');
