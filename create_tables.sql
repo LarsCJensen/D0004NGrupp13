@@ -140,8 +140,8 @@ CREATE TABLE green_rental.booking_details (
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber)
 );
 
-CREATE TABLE green_rental.contract (
-    contractID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE green_rental.agreement (
+    agreementID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     datum DATETIME,
     orderingParty VARCHAR(100),
