@@ -65,6 +65,25 @@ SELECT * FROM vehicle_category;
 
 -- Insert vehicle dummy data
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("ABC123", 1, "Uppsala Station", "Smart EQ ForTwo");
+VALUES ("ABC123", 1, "Uppsala station", "Smart EQ ForTwo");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CBA321", 1, "Lund station", "Smart EQ ForTwo");
 
 SELECT * FROM vehicle;
+
+INSERT INTO business_customer (orgNumber, name, streetName, zipCode, city, country, invoiceStreetName, invoiceZipCode, invoiceCity, invoiceCountry, contactPerson, telephoneNumber, email)
+VALUES ("716439-0093", "BRF Rökepipan", "Lyftvägen", "24755", "Dalby", "Sweden", "Lyftvägen", "24755", "Dalby", "Sweden", "Lars Jensen", "0705555555", "lars@rokepipan.se");
+
+SELECT * FROM business_customer;
+
+-- Insert Booking dummy data
+INSERT INTO booking (stationName, orgNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Lund station", "716439-0093", "2024-04-10", "2024-04-12", "Test Comment", True, 998);
+
+SELECT * FROM booking;
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES (1, "ABC123");
+
+SELECT * FROM booking_details;
