@@ -60,12 +60,42 @@ SELECT * FROM staff;
 INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
 VALUES("Stadsbil", "El", true, 2, "", 25, 249);
 
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Liten", "Etanol", false, 5, "", 29, 349);
+
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Mellan", "El", true, 5, "Parkeringsfunktion", 39, 449);
+
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Kombi", "El", true, 7, "Dragkrok och backsystem", 49, 549);
+
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Minibuss", "Biogas", false, 9, "TV i taket", 59, 599);
+
+INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
+VALUES("Transportbil", "Biogas", false, 2, "Kamera för övervakning av last", 39, 399);
+
 SELECT * FROM vehicle_category;
 
 
 -- Insert vehicle dummy data
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("ABC123", 1, "Uppsala station", "Smart EQ ForTwo");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAC223", 2, "Uppsala station", "Ford Puma 1.0T");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAB222", 3, "Uppsala station", "Tesla Model S");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KBA321", 4, "Uppsala station", "MG MG5 EV");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CAG461", 5, "Uppsala station", "Mercedes B200");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LCG952", 5, "Uppsala station", "VW Caddy 1.4");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("CBA321", 1, "Lund station", "Smart EQ ForTwo");
