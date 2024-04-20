@@ -62,7 +62,7 @@ CREATE TABLE green_rental.control (
     controlID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
-    datum DATETIME,
+    controlDate DATETIME,
     controlLarge BOOL,
     fuelLevel INT,
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber),
