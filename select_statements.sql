@@ -37,10 +37,25 @@ WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum
 
 -- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
+SELECT vehicle.registrationNumber FROM green_rental.vehicle
+LEFT JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
+LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
+LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
+WHERE control.controlLarge is FALSE and control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
 -- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
 -- Sök fram alla bilar som har en skada
 -- Lägg till en skada
 -- Lägg till en kontroll
+INSERT INTO green_rental.control (registrationNumber,staffID,datum,controlLarge,fuelLevel)
+SELECT v.registrationNumber,
+2 as staffID,
+b.endDate as datum,
+FALSE as controlLarge,
+30 as fuelLevel
+FROM green_rental.vehicle as v
+LEFT JOIN booking_details bd ON v.registrationNumber=bd.registrationNumber
+LEFT JOIN booking b ON bd.bookingNumber=b.bookingNumber
+WHERE b.endDate="2024-04-12";
 
 
 
