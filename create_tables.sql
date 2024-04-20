@@ -1,7 +1,7 @@
 CREATE DATABASE green_rental COLLATE latin1_swedish_ci;
 USE green_rental;
 
-CREATE TABLE station (
+CREATE TABLE green_rental.station (
     stationName VARCHAR(50) PRIMARY KEY,
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
@@ -9,7 +9,7 @@ CREATE TABLE station (
     country VARCHAR(50)
 );
 
-CREATE TABLE vehicle_category(
+CREATE TABLE green_rental.vehicle_category(
 	vehicleCategoryId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     propellant VARCHAR(50) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE vehicle_category(
     price FLOAT NOT NULL
 );
 
-CREATE TABLE vehicle (
+CREATE TABLE green_rental.vehicle (
   registrationNumber VARCHAR(6) NOT NULL PRIMARY KEY,
   stationName VARCHAR(50) NOT NULL,
   vehicleCategoryId INT NOT NULL,
@@ -33,11 +33,11 @@ CREATE TABLE vehicle (
   ON UPDATE NO ACTION
 );
 
-CREATE TABLE staff (
-    staffID INT PRIMARY KEY,
+CREATE TABLE green_rental.staff (
+    staffID INT AUTO_INCREMENT PRIMARY KEY,
     stationName VARCHAR(50),
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
@@ -48,9 +48,8 @@ CREATE TABLE staff (
     quit BOOL,
     FOREIGN KEY (stationName) REFERENCES station(stationName)
 );
-
-CREATE TABLE report (
-    reportID INT PRIMARY KEY,
+CREATE TABLE green_rental.report (
+    reportID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
     datum DATETIME,
@@ -59,7 +58,7 @@ CREATE TABLE report (
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );
 
-CREATE TABLE control (
+CREATE TABLE green_rental.control (
     controlID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
@@ -70,7 +69,7 @@ CREATE TABLE control (
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );
 
-CREATE TABLE damage (
+CREATE TABLE green_rental.damage (
     damageID INT AUTO_INCREMENT PRIMARY KEY,
     controlID INT,
     fixedDamage BOOL,
@@ -79,31 +78,35 @@ CREATE TABLE damage (
     FOREIGN KEY (controlID) REFERENCES control(controlID)
 );
 
-CREATE TABLE business_customer (
-    orgNumber INT PRIMARY KEY,
+CREATE TABLE green_rental.business_customer (
+    orgNumber VARCHAR(11) PRIMARY KEY,
+    name VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
+    country VARCHAR(50),
     invoiceStreetName VARCHAR(50),
     invoiceZipCode VARCHAR(10),
     invoiceCity VARCHAR(50),
+    invoiceCountry VARCHAR(50),
     contactPerson VARCHAR(50),
     telephoneNumber VARCHAR(25),
     email VARCHAR(50)
 );
 
-CREATE TABLE private_customer (
+CREATE TABLE green_rental.private_customer (
     personalIdentificationNumber VARCHAR(13) PRIMARY KEY,
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
+    country VARCHAR(50),
     telephone VARCHAR(25),
     email VARCHAR(50)
 );
 
-CREATE TABLE offer (
+CREATE TABLE green_rental.offer (
     offerID INT AUTO_INCREMENT PRIMARY KEY,
     descriptionOffer VARCHAR(256),
     startDatum DATETIME,
@@ -112,14 +115,14 @@ CREATE TABLE offer (
     discount INT
 );
 
-CREATE TABLE booking (
+CREATE TABLE green_rental.booking (
     bookingNumber INT AUTO_INCREMENT PRIMARY KEY,
     stationName VARCHAR(50),
-    orgNumber INT,
+    orgNumber VARCHAR(11),
     personalIdentificationNumber VARCHAR(255),
     offerID INT,
-    startDatum DATETIME,
-    endDatum DATETIME,
+    startDate DATETIME,
+    endDate DATETIME,
     commentBooking VARCHAR(512),
     driverLicenseCheck BOOL,
     cost FLOAT,
@@ -129,27 +132,26 @@ CREATE TABLE booking (
     FOREIGN KEY (offerID) REFERENCES offer(offerID)
 );
 
-CREATE TABLE booking_details (
-    bookingDetalsID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE green_rental.booking_details (
+    bookingDetailsID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     registrationNumber VARCHAR(6),
     FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber),
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber)
 );
 
-CREATE TABLE contract (
-    contractID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE green_rental.agreement (
+    agreementID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     datum DATETIME,
     orderingParty VARCHAR(100),
     FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber)
 );
 
-CREATE TABLE invoice (
-    invoiceNumber INT PRIMARY KEY,
+CREATE TABLE green_rental.invoice (
+    invoiceNumber INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
-    price FLOAT,
-    vatlueAddedTax INT,
+    invoiceSum FLOAT,
     datum DATETIME,
     dueDate DATETIME,
     paid BOOL,
