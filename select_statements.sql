@@ -38,44 +38,31 @@ WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum
 -- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
 SELECT vehicle.registrationNumber FROM green_rental.vehicle
-LEFT JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
+INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
 LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
 LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
-WHERE control.controlLarge is FALSE and control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
+WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
 
 -- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
-SELECT vehicle.registrationNumber
+SELECT vehicle.registrationNumber as Registreringsnummer
 FROM green_rental.vehicle
 LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
-WHERE control.controlLarge is TRUE and control.datum>=DATE_SUB(CURDATE(), INTERVAL 3 MONTH);
+WHERE control.controlLarge is TRUE or control.controlDate is NULL and CURDATE()>=DATE_ADD(control.controlDate, INTERVAL 3 MONTH);
 
 -- Sök fram alla bilar som har en skada
-SELECT vehicle.RegistrationNumber, damage.damageID, damage.descriptionDamage
+SELECT vehicle.RegistrationNumber as Registreringsnummer, damage.damageID as SkadeID, damage.descriptionDamage as Beskrivning
 FROM green_rental.vehicle
-LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
-LEFT JOIN damage ON damage.controlID=control.controlID
-WHERE damageID is not NULL AND damage.repairedDate is NULL;
+INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
+INNER JOIN damage ON damage.controlID=control.controlID
+WHERE damage.repairedDate is NULL;
 
 -- Lägg till en skada
 INSERT INTO green_rental.damage (controlID,fixedDamage,repairedDate,descriptionDamage)
-SELECT c.controlID,
-FALSE as fixedDamage,
-NULL as repairedDate,
-"Stenskott" as descriptionDamage
-FROM green_rental.control as c
-WHERE c.registrationNumber="ABC123";
+VALUES(1,FALSE,NULL,"Stenskott");
 
 -- Lägg till en kontroll
 INSERT INTO green_rental.control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
-SELECT v.registrationNumber,
-2 as staffID,
-b.endDate as controlDate,
-FALSE as controlLarge,
-30 as fuelLevel
-FROM green_rental.vehicle as v
-LEFT JOIN booking_details bd ON v.registrationNumber=bd.registrationNumber
-LEFT JOIN booking b ON bd.bookingNumber=b.bookingNumber
-WHERE b.endDate="2024-04-12";
+VALUES("ABC123",1,2024-04-21,FALSE,30);
 
 
 
