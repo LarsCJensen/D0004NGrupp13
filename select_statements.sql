@@ -1,7 +1,6 @@
 -- Aktörer
 
 -- Uthyrningspersonal
--- Sök fram alla bilar som är lediga.
 -- Sök fram alla bilar av en viss kategori på “min” station
 -- Sök fram alla bilar av en viss kategori på alla stationer
 -- Sök fram alla lediga bilar av en viss kategori på “min” station
@@ -11,11 +10,29 @@
 -- Uppdatera bokning med nytt datum
 -- Koppla bil till annan station
 
--- Select all vacant cars
-SELECT vehicle.registrationNumber FROM green_rental.vehicle
-LEFT JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
-LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
-WHERE vehicle.stationName = "Uppsala station" AND booking.endDatum < "2024-04-13";
+-- Select all vacant cars for a station
+SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
+FROM green_rental.vehicle as v
+LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
+LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
+INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
+WHERE v.stationName = "Uppsala station" AND (b.endDatum < "2024-04-13" OR b.endDatum IS NULL);
+
+
+-- Select all vacant cars for all stations
+SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
+FROM green_rental.vehicle as v
+LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
+LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
+INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
+WHERE b.endDatum < "2024-04-13" OR b.endDatum IS NULL;
+
+-- Select all vacant cars for "my" station of a certain category
+SELECT v.registrationNumber, v.stationName FROM green_rental.vehicle as v
+LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
+LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
+INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
+WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum < "2024-04-12" OR b.endDatum IS NULL);
 
 
 -- Underhållspersonal
