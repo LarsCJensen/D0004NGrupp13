@@ -47,7 +47,7 @@ WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
 SELECT vehicle.registrationNumber as Registreringsnummer
 FROM green_rental.vehicle
 LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
-WHERE control.controlLarge is TRUE or control.controlDate is NULL and CURDATE()>=DATE_ADD(control.controlDate, INTERVAL 3 MONTH);
+WHERE control.controlLarge is TRUE or control.controlDate is NULL and control.controlDate>=DATE_ADD(CURDATE(), INTERVAL 3 MONTH);
 
 -- Sök fram alla bilar som har en skada
 SELECT vehicle.RegistrationNumber as Registreringsnummer, damage.damageID as SkadeID, damage.descriptionDamage as Beskrivning
@@ -57,12 +57,12 @@ INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
 
 -- Lägg till en skada
-INSERT INTO green_rental.damage (controlID,fixedDamage,repairedDate,descriptionDamage)
-VALUES(1,FALSE,NULL,"Stenskott");
+INSERT INTO green_rental.damage (controlID,fixedDamage,descriptionDamage)
+VALUES(1,FALSE,"Stenskott");
 
 -- Lägg till en kontroll
 INSERT INTO green_rental.control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
-VALUES("ABC123",1,2024-04-21,FALSE,30);
+VALUES("ABC123",1,"2024-04-21",FALSE,30);
 
 
 
