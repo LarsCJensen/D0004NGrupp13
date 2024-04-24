@@ -37,10 +37,32 @@ WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum
 
 -- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
+SELECT vehicle.registrationNumber FROM green_rental.vehicle
+INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
+LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
+LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
+WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
+
 -- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
+SELECT vehicle.registrationNumber as Registreringsnummer
+FROM green_rental.vehicle
+LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
+WHERE control.controlLarge is TRUE or control.controlDate is NULL and control.controlDate>=DATE_ADD(CURDATE(), INTERVAL 3 MONTH);
+
 -- Sök fram alla bilar som har en skada
+SELECT vehicle.RegistrationNumber as Registreringsnummer, damage.damageID as SkadeID, damage.descriptionDamage as Beskrivning
+FROM green_rental.vehicle
+INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
+INNER JOIN damage ON damage.controlID=control.controlID
+WHERE damage.repairedDate is NULL;
+
 -- Lägg till en skada
+INSERT INTO green_rental.damage (controlID,fixedDamage,descriptionDamage)
+VALUES(1,FALSE,"Stenskott");
+
 -- Lägg till en kontroll
+INSERT INTO green_rental.control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
+VALUES("ABC123",1,"2024-04-21",FALSE,30);
 
 
 
