@@ -1,4 +1,4 @@
-/* @author Dnyaz Ali Ahmet (dnyali-3)
+/* @author Dnyaz Ali Ahmet
  * @date 2024-04-05
  *
  * This file is used to declare each table

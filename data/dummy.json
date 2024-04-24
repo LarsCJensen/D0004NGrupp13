@@ -1,0 +1,170 @@
+{
+    "stations": [
+        {
+            "stationName": "Station A",
+            "address": "123 Main Street",
+            "zipCode": "54321",
+            "country": "Country A",
+            "city": "City A"
+        },
+        {
+            "stationName": "Station B",
+            "address": "456 Elm Street",
+            "zipCode": "67890",
+            "country": "Country B",
+            "city": "City B"
+        },
+        {
+            "stationName": "Station C",
+            "address": "789 Oak Street",
+            "zipCode": "13579",
+            "country": "Country C",
+            "city": "City C"
+        }
+    ],
+    "employees": [
+        {
+            "firstName": "John",
+            "lastName": "Doe",
+            "role": "Manager",
+            "stationId": "001",
+            "employmentDate": "2023-05-15",
+            "phoneNo": "123-456-7890",
+            "email": "john.doe@greenrental.com",
+            "address": "123 Main Street",
+            "zipCode": "54321",
+            "country": "Country A",
+            "employed": true
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Smith",
+            "role": "Manager",
+            "stationId": "002",
+            "employmentDate": "2022-10-20",
+            "phoneNo": "987-654-3210",
+            "email": "jane.smith@greenrental.com",
+            "address": "456 Elm Street",
+            "zipCode": "67890",
+            "country": "Country B",
+            "employed": true
+        },
+        {
+            "firstName": "Alice",
+            "lastName": "Johnson",
+            "role": "Technician",
+            "stationId": "003",
+            "employmentDate": "2023-01-10",
+            "phoneNo": "555-555-5555",
+            "email": "alice.johnson@greenrental.com",
+            "address": "789 Oak Street",
+            "zipCode": "13579",
+            "country": "Country C",
+            "employed": true
+        },
+        {
+            "firstName": "Michael",
+            "lastName": "Brown",
+            "role": "Technician",
+            "stationId": "004",
+            "employmentDate": "2022-07-25",
+            "phoneNo": "111-222-3333",
+            "email": "michael.brown@greenrental.com",
+            "address": "101 Pine Street",
+            "zipCode": "24680",
+            "country": "Country A",
+            "employed": true
+        },
+        {
+            "firstName": "Emily",
+            "lastName": "Williams",
+            "role": "Technician",
+            "stationId": "005",
+            "employmentDate": "2023-03-05",
+            "phoneNo": "999-888-7777",
+            "email": "emily.williams@greenrental.com",
+            "address": "202 Maple Avenue",
+            "zipCode": "97531",
+            "country": "Country B",
+            "employed": true
+        },
+        {
+            "firstName": "David",
+            "lastName": "Jones",
+            "role": "Technician",
+            "stationId": "006",
+            "employmentDate": "2022-11-30",
+            "phoneNo": "444-444-4444",
+            "email": "david.jones@greenrental.com",
+            "address": "303 Cedar Lane",
+            "zipCode": "86420",
+            "country": "Country C",
+            "employed": true
+        },
+        {
+            "firstName": "Sarah",
+            "lastName": "Davis",
+            "role": "Assistant",
+            "stationId": "007",
+            "employmentDate": "2023-02-15",
+            "phoneNo": "777-777-7777",
+            "email": "sarah.davis@greenrental.com",
+            "address": "404 Oak Lane",
+            "zipCode": "75309",
+            "country": "Country A",
+            "employed": true
+        },
+        {
+            "firstName": "Matthew",
+            "lastName": "Miller",
+            "role": "Clerk",
+            "stationId": "008",
+            "employmentDate": "2022-09-10",
+            "phoneNo": "666-666-6666",
+            "email": "matthew.miller@greenrental.com",
+            "address": "505 Elm Avenue",
+            "zipCode": "64208",
+            "country": "Country B",
+            "employed": true
+        },
+        {
+            "firstName": "Emma",
+            "lastName": "Wilson",
+            "role": "Clerk",
+            "stationId": "009",
+            "employmentDate": "2023-04-20",
+            "phoneNo": "333-333-3333",
+            "email": "emma.wilson@greenrental.com",
+            "address": "606 Pine Lane",
+            "zipCode": "53142",
+            "country": "Country C",
+            "employed": true
+        },
+        {
+            "firstName": "Christopher",
+            "lastName": "Taylor",
+            "role": "Clerk",
+            "stationId": "010",
+            "employmentDate": "2022-12-05",
+            "phoneNo": "222-222-2222",
+            "email": "christopher.taylor@greenrental.com",
+            "address": "707 Maple Street",
+            "zipCode": "75301",
+            "country": "Country A",
+            "employed": true
+        },
+        {
+            "firstName": "Olivia",
+            "lastName": "Moore",
+            "role": "Clerk",
+            "stationId": "011",
+            "employmentDate": "2023-01-25",
+            "phoneNo": "111-111-1111",
+            "email": "olivia.moore@greenrental.com",
+            "address": "808 Oak Avenue",
+            "zipCode": "64203",
+            "country": "Country B",
+            "employed": true
+        }
+    ]
+}
