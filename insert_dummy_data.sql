@@ -9,7 +9,7 @@
  * of the fictive company Green Rental.
  */
 
--- List all databases, verify GreenRental exists!
+-- List all databases, verify green_rental exists!
 SHOW DATABASES;
 
 -- Select the Green Rental database;
@@ -26,7 +26,7 @@ DESCRIBE damage;
 DESCRIBE booking;
 DESCRIBE booking_details;
 DESCRIBE invoice;
-DESCRIBE contract;
+DESCRIBE agreement;
 DESCRIBE offer;
 DESCRIBE business_customer;
 DESCRIBE private_customer;
@@ -55,7 +55,6 @@ VALUES ('Dnyaz', 'AA', 'Manager', "Linköping station", '2024-01-01', '123-123-1
 -- Validate the staff entries
 SELECT * FROM staff;
 
-
 -- Insert vehicle_category dummy data
 INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
 VALUES("Stadsbil", "El", true, 2, "", 25, 249);
@@ -76,7 +75,6 @@ INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, 
 VALUES("Transportbil", "Biogas", false, 2, "Kamera för övervakning av last", 39, 399);
 
 SELECT * FROM vehicle_category;
-
 
 -- Insert vehicle dummy data
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
@@ -102,14 +100,49 @@ VALUES ("CBA321", 1, "Lund station", "Smart EQ ForTwo");
 
 SELECT * FROM vehicle;
 
+-- Insert business_customer dummy data
 INSERT INTO business_customer (orgNumber, name, streetName, zipCode, city, country, invoiceStreetName, invoiceZipCode, invoiceCity, invoiceCountry, contactPerson, telephoneNumber, email)
 VALUES ("716439-0093", "BRF Rökepipan", "Lyftvägen", "24755", "Dalby", "Sweden", "Lyftvägen", "24755", "Dalby", "Sweden", "Lars Jensen", "0705555555", "lars@rokepipan.se");
 
+INSERT INTO business_customer (orgNumber, name, streetName, zipCode, city, country, invoiceStreetName, invoiceZipCode, invoiceCity, invoiceCountry, contactPerson, telephoneNumber, email)
+VALUES ("556677-8901", "EcoTech AB", "Grönvägen", "54321", "Uppsala", "Sweden", "Grönvägen", "54321", "Uppsala", "Sweden", "Gunnar Ström", "0701234567", "gunnar@ecotech.com");
+
+INSERT INTO business_customer (orgNumber, name, streetName, zipCode, city, country, invoiceStreetName, invoiceZipCode, invoiceCity, invoiceCountry, contactPerson, telephoneNumber, email)
+VALUES ("789012-3456", "Wheels AB", "Stångvägen", "55677", "Borås", "Sweden", "Stångvägen", "55677", "Borås", "Sweden", "Nisse Klang", "0707654321", "klang@wheels.se");
+
 SELECT * FROM business_customer;
 
--- Insert Booking dummy data
+-- Insert Booking dummy data (business_customer)
 INSERT INTO booking (stationName, orgNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
 VALUES("Lund station", "716439-0093", "2024-04-10", "2024-04-12", "Test Comment", True, 998);
+
+INSERT INTO booking (stationName, orgNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Uppsala station", "556677-8901", "2024-05-01", "2024-05-07", "Veckobokning", True, 3493);
+
+INSERT INTO booking (stationName, orgNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Linköping station", "789012-3456", "2024-05-01", "2024-05-31", "Månadsbokning", True, 9999);
+
+-- Insert private_customer dummy data
+INSERT INTO private_customer (personalIdentificationNumber, firstName, lastName, streetName, zipCode, city, country, telephone, email)
+VALUES ('000610-1234', 'Max', 'Berggren', 'Havsvägen', '11233', 'Uppsala', 'Sweden', '0732235543', 'max.berg@gmal.se');
+
+INSERT INTO private_customer (personalIdentificationNumber, firstName, lastName, streetName, zipCode, city, country, telephone, email)
+VALUES ('900530-1234', 'Frida', 'Andersson', 'Äventyrsstigen', '12345', 'Lund', 'Sweden', '0732233555', 'frida123@gmal.se');
+
+INSERT INTO private_customer (personalIdentificationNumber, firstName, lastName, streetName, zipCode, city, country, telephone, email)
+VALUES ('801103-1234', 'Saga', 'Nilsen', 'Sagovägen', '12345', 'Linköping', 'Sweden', '0733333333', 'nilsensaga@gmal.se');
+
+-- Insert Booking dummy data (private_customer)
+INSERT INTO booking (stationName, personalIdentificationNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Lund station", "000610-1234", "2024-05-01", "2024-05-03", "Test Comment", True, 1497);
+
+INSERT INTO booking (stationName, personalIdentificationNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Uppsala station", "900530-1234", "2024-05-04", "2024-05-05", "Weekendbokning", True, 998);
+
+INSERT INTO booking (stationName, personalIdentificationNumber, startDatum, endDatum, commentBooking, driverLicenseCheck, cost)
+VALUES("Linköping station", "801103-1234", "2024-05-25", "2024-05-26", "Weekendbokning", True, 998);
+
+-- Insert offer dummy data
 
 SELECT * FROM booking;
 
