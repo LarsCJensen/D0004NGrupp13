@@ -34,10 +34,10 @@ CREATE TABLE green_rental.vehicle (
 );
 
 CREATE TABLE green_rental.staff (
-    staffID INT PRIMARY KEY,
+    staffID INT AUTO_INCREMENT PRIMARY KEY,
     stationName VARCHAR(50),
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
@@ -49,7 +49,7 @@ CREATE TABLE green_rental.staff (
     FOREIGN KEY (stationName) REFERENCES station(stationName)
 );
 CREATE TABLE green_rental.report (
-    reportID INT PRIMARY KEY,
+    reportID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
     datum DATETIME,
@@ -62,7 +62,7 @@ CREATE TABLE green_rental.control (
     controlID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
-    datum DATETIME,
+    controlDate DATETIME,
     controlLarge BOOL,
     fuelLevel INT,
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber),
@@ -80,6 +80,7 @@ CREATE TABLE green_rental.damage (
 
 CREATE TABLE green_rental.business_customer (
     orgNumber VARCHAR(11) PRIMARY KEY,
+    name VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
@@ -95,8 +96,8 @@ CREATE TABLE green_rental.business_customer (
 
 CREATE TABLE green_rental.private_customer (
     personalIdentificationNumber VARCHAR(13) PRIMARY KEY,
-    preName VARCHAR(50),
-    surName VARCHAR(50),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     streetName VARCHAR(50),
     zipCode VARCHAR(10),
     city VARCHAR(50),
@@ -120,8 +121,8 @@ CREATE TABLE green_rental.booking (
     orgNumber VARCHAR(11),
     personalIdentificationNumber VARCHAR(255),
     offerID INT,
-    startDatum DATETIME,
-    endDatum DATETIME,
+    startDate DATETIME,
+    endDate DATETIME,
     commentBooking VARCHAR(512),
     driverLicenseCheck BOOL,
     cost FLOAT,
@@ -139,8 +140,8 @@ CREATE TABLE green_rental.booking_details (
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber)
 );
 
-CREATE TABLE green_rental.contract (
-    contractID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE green_rental.agreement (
+    agreementID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     datum DATETIME,
     orderingParty VARCHAR(100),
@@ -148,7 +149,7 @@ CREATE TABLE green_rental.contract (
 );
 
 CREATE TABLE green_rental.invoice (
-    invoiceNumber INT PRIMARY KEY,
+    invoiceNumber INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     invoiceSum FLOAT,
     datum DATETIME,
