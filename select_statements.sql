@@ -89,3 +89,29 @@ VALUES("ABC123",1,"2024-04-21",FALSE,30);
 -- Ta fram summan av alla fakturor för en viss period.
 -- Lägg till faktura
 -- Lägg till kampanj
+
+-- Ta fram alla fakturor under en viss period
+SELECT green_rental.invoice.invoiceNumber, green_rental.invoice.bookingNumber, green_rental.invoice.invoiceSum, green_rental.invoice.datum, green_rental.invoice.dueDate, green_rental.invoice.paid
+FROM green_rental.invoice
+LEFT JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
+WHERE green_rental.invoice.datum BETWEEN DATE() AND DATE();
+
+-- Ta fram alla obetalda fakturor
+SELECT *
+FROM green_rental.invoice
+LEFT JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
+WHERE green_rental.invoice.paid = FALSE;
+
+-- Ta fram summan av alla fakturor för en viss period
+SELECT SUM(green_rental.invoice.invoiceSum) AS total_sum
+FROM green_rental.invoice
+INNER JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
+WHERE green_rental.invoice.datum BETWEEN DATE() AND DATE();
+
+-- Lägg till faktura
+INSERT INTO green_rental.invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+VALUES ('booking_number', 'invoice_sum', 'datum', 'due_date', 'paid_status');
+
+-- Lägg till kampanj
+INSERT INTO green_rental.offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+VALUES ('description', 'start_date', 'end_date', 'free_mileage', 'discount');
