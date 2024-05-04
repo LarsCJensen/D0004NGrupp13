@@ -25,7 +25,7 @@ CREATE TABLE green_rental.vehicle (
   stationName VARCHAR(50) NOT NULL,
   vehicleCategoryId INT NOT NULL,
   model VARCHAR(32) NOT NULL,
-  FOREIGN KEY (stationName) REFERENCES station(stationName) 
+  FOREIGN KEY (stationName) REFERENCES station(stationName)
   ON DELETE NO ACTION -- Create test for this
   ON UPDATE NO ACTION,
   FOREIGN KEY (vehicleCategoryId) REFERENCES vehicle_category(vehicleCategoryId)
