@@ -74,9 +74,10 @@ VALUES("Minibuss", "Biogas", false, 9, "TV i taket", 59, 599);
 INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
 VALUES("Transportbil", "Biogas", false, 2, "Kamera för övervakning av last", 39, 399);
 
+-- Validate the vehicle_category entries
 SELECT * FROM vehicle_category;
 
--- Insert vehicle dummy data
+-- Insert vehicle dummy data for Uppsala station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("ABC123", 1, "Uppsala station", "Smart EQ ForTwo");
 
@@ -87,18 +88,81 @@ INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("AAB222", 3, "Uppsala station", "Tesla Model S");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAD123", 3, "Uppsala station", "Volvo XC40");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ADA321", 3, "Uppsala station", "Volvo EX30");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LLD914", 4, "Uppsala station", "Volvo XC60");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("KBA321", 4, "Uppsala station", "MG MG5 EV");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("CAG461", 5, "Uppsala station", "Mercedes B200");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("LCG952", 5, "Uppsala station", "VW Caddy 1.4");
+VALUES ("CWV737", 6, "Uppsala station", "WV California");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("CBA321", 1, "Lund station", "Smart EQ ForTwo");
+VALUES ("SMM346", 6, "Uppsala station", "Mercedes Vito");
 
-SELECT * FROM vehicle;
+-- Select all vehicles for Uppsala station
+SELECT * FROM vehicle
+WHERE stationName = "Uppsala station";
+
+-- Insert vehicle dummy data for Lund Station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CBA321", 1, "Lund station", "Mini Cooper");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("EDF774", 1, "Lund station", "Fiat 500");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("FED575", 3, "Lund station", "Tesla Model S");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KLT369", 4, "Lund station", "Tesla Model X");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AKB465", 4, "Lund station", "MG MG5 EV");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("WVC331", 6, "Lund station", "WV California");
+
+-- Select all vehicles for Lund Station
+SELECT * FROM vehicle
+WHERE stationName = "Lund station";
+
+-- Insert vehicle dummy data for Linköping Station Toyota iQ
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KLM963", 1, "Linköping Station", "Kia Picanto");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LKT752", 1, "Linköping Station", "Toyota iQ");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CTS213", 2, "Linköping Station", "Citroën C1");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("RTP317", 2, "Linköping Station", "Citroën 2CV");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("VBX479", 4, "Linköping Station", "Tesla Model X");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LMD994", 4, "Linköping Station", "Volvo XC60");
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("SDL176", 6, "Linköping Station", "Mercedes Vito");
+
+-- Select all vehicles for Linköping Station
+SELECT * FROM vehicle
+WHERE stationName = "Linköping station";
+
+-- Validate all the vehicle entries
+-- SELECT * FROM vehicle;
 
 -- Insert business_customer dummy data
 INSERT INTO business_customer (orgNumber, name, streetName, zipCode, city, country, invoiceStreetName, invoiceZipCode, invoiceCity, invoiceCountry, contactPerson, telephoneNumber, email)
