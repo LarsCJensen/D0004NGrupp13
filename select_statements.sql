@@ -86,14 +86,9 @@ WHERE damage.repairedDate is NULL;
 INSERT INTO green_rental.damage (controlID, fixedDamage, descriptionDamage)
 VALUES(1, FALSE, "Stenskott");
 
-INSERT INTO green_rental.damage (controlID, fixedDamage, descriptionDamage)
-VALUES(SELECT controlID, FALSE, "Punktering"
-FROM green_rental.control
-WHERE registrationNumber = "AAB222");
-
 -- Lägg till en kontroll
 INSERT INTO green_rental.control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
-VALUES("ABC123",1,"2024-04-21",FALSE,30);
+VALUES("ABC123", 1, "2024-04-21", FALSE, 30);
 
 -- Underhållspersonal
 -- Administratörer
