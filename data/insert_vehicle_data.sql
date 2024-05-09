@@ -19,7 +19,7 @@ USE green_rental;
 DESCRIBE vehicle;
 DESCRIBE vehicle_category;
 
--- Insert vehicle_category dummy data
+-- Insert vehicle_category data
 INSERT INTO vehicle_category (name, propellant, automatic, numberOfSeats, misc, costPerKm, price)
 VALUES("Stadsbil", "El", true, 2, "", 25, 249);
 
@@ -63,7 +63,7 @@ SELECT vehicleCategoryId INTO @CatId_Transportbil
 FROM vehicle_category
 WHERE name = 'Transportbil';
 
--- Insert vehicle dummy data for Uppsala station
+-- Insert vehicle data for Uppsala station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("ABC123", @CatId_Stadsbil, "Uppsala station", "Smart EQ ForTwo");
 
@@ -94,7 +94,7 @@ VALUES ("CWV737", @CatId_Transportbil, "Uppsala station", "WV California");
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("SMM346", @CatId_Transportbil, "Uppsala station", "Mercedes Vito");
 
--- Insert vehicle dummy data for Lund Station
+-- Insert vehicle data for Lund Station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("CBA321",  @CatId_Stadsbil, "Lund station", "Mini Cooper");
 
@@ -105,15 +105,15 @@ INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("FED575", @CatId_Mellan, "Lund station", "Tesla Model S");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("KLT369", @CatId_Kombi "Lund station", "Tesla Model X");
+VALUES ("KLT369", @CatId_Kombi, "Lund station", "Tesla Model X");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("AKB465", @CatId_Kombi "Lund station", "MG MG5 EV");
+VALUES ("AKB465", @CatId_Kombi, "Lund station", "MG MG5 EV");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("WVC331", @CatId_Transportbil, "Lund station", "WV California");
 
--- Insert vehicle dummy data for Linköping Station Toyota iQ
+-- Insert vehicle data for Linköping Station Toyota iQ
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("KLM963", @CatId_Stadsbil, "Linköping Station", "Kia Picanto");
 
@@ -121,10 +121,10 @@ INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("LKT752", @CatId_Stadsbil, "Linköping Station", "Toyota iQ");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("CTS213", @CatId_Liten "Linköping Station", "Citroën C1");
+VALUES ("CTS213", @CatId_Liten, "Linköping Station", "Citroën C1");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
-VALUES ("RTP317", @CatId_Liten "Linköping Station", "Citroën 2CV");
+VALUES ("RTP317", @CatId_Liten, "Linköping Station", "Citroën 2CV");
 
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("VBX479", @CatId_Kombi, "Linköping Station", "Tesla Model X");

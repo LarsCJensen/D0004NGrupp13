@@ -19,7 +19,7 @@ USE green_rental;
 DESCRIBE station;
 DESCRIBE staff;
 
--- Insert station dummy data
+-- Insert station data
 INSERT INTO station (stationName, streetName, zipCode, country, city)
 VALUES ('Uppsala station', 'Uppsalavägen 111', '11111', 'SWE', 'Uppsala');
 INSERT INTO station (stationName, streetName, zipCode, country, city)
@@ -41,7 +41,7 @@ VALUES ('Oscar', 'Nilsson', 'Technician', 'Uppsala Station', '2023-05-15', '070-
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
 VALUES ('Jenny', 'Karlsson', 'Technician', 'Uppsala Station', '2024-05-11', '070-777-5678', 'sara.eriksson@greenrental.com', 'Uppsalavägen 555', '11115', false);
 
--- Insert staff dummy data for Lund station
+-- Insert staff data for Lund station
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
 VALUES ('Lars', 'J', 'Manager', "Lund station", '2024-01-01', '123-123-123', 'lars.j@greenrental.com', 'Lundvägen 222', '22220', false);
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
@@ -53,7 +53,7 @@ VALUES ('Jonas', 'Johansson', 'Technician', 'Lund Station', '2023-09-20', '070-3
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
 VALUES ('Lisa', 'Pettersson', 'Technician', 'Lund Station', '2023-12-25', '070-456-7890', 'lisa.pettersson@greenrental.com', 'Lundagatan 987', '22224', false);
 
--- Insert staff dummy data for Linköping station
+-- Insert staff data for Linköping station
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
 VALUES ('Dnyaz', 'AA', 'Manager', "Linköping station", '2024-01-01', '123-123-123', 'dnyaz.aa@greenrental.com', 'Linköpingsvägen 333', '33330', false);
 INSERT INTO staff (firstName, lastName, title, stationName, hiringDate, telephoneNumber, email, streetName, zipCode, quit)
