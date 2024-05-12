@@ -66,6 +66,7 @@ CREATE TABLE green_rental.control (
     controlDate DATETIME,
     controlLarge BOOL,
     fuelLevel INT,
+    mileage FLOAT,
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber),
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
 );
