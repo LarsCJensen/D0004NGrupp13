@@ -31,13 +31,19 @@ UPDATE vehicle
 SET stationName = "Linköping station"
 WHERE registrationNumber = "CAG461";
 
+-- Select all cars
+SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
+FROM vehicle as v
+INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
+ORDER BY Station, FordonsKategori;
+
 -- Select all vacant cars for a station
 SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
 FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND (b.endDatum < "2024-04-13" OR b.endDatum IS NULL)
+WHERE v.stationName = "Uppsala station" AND (b.endDate < "2024-04-13" OR b.endDate IS NULL)
 ORDER BY Fordonskategori;
 
 -- Select all vacant cars for all stations
@@ -46,19 +52,19 @@ FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE b.endDatum < "2024-04-13" OR b.endDatum IS NULL
-ORDER BY Fordonskategori;
+WHERE b.endDate < "2024-04-13" OR b.endDate IS NULL
+ORDER BY Station, Fordonskategori;
 
 -- Select all vacant cars for "my" station of a certain category
 SELECT v.registrationNumber, v.stationName FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum < "2024-04-12" OR b.endDatum IS NULL);
+WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDate < "2024-04-12" OR b.endDate IS NULL);
 
 -- Select number of cars per station
 SELECT v.stationName as Station, count(*) as "Antal bilar" 
-FROM vehicle as v GROUP BY v.stationName ;
+FROM vehicle as v GROUP BY v.stationName;
 
 -- Select all stations with vacant cars
 SELECT v.stationName as Station, count(*) as "Antal lediga bilar" 
@@ -71,7 +77,7 @@ WHERE v.registrationNumber IN
         LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber  
         LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber  
         INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId  
-        WHERE b.endDatum < "2024-04-12" OR b.endDatum IS NULL 
+        WHERE b.endDate < "2024-04-12" OR b.endDate IS NULL 
 	) 
 GROUP BY v.stationName;
 
@@ -122,16 +128,16 @@ LEFT JOIN booking ON invoice.bookingNumber = booking.bookingNumber
 WHERE invoice.datum BETWEEN DATE() AND DATE();
 
 -- Ta fram alla obetalda fakturor
-SELECT *
+SELECT count(*) as "Antal obetalda fakturor", SUM(invoiceSum) as "Summa"
 FROM invoice
 LEFT JOIN booking ON invoice.bookingNumber = booking.bookingNumber
 WHERE invoice.paid = FALSE;
 
 -- Ta fram summan av alla fakturor för en viss period
-SELECT SUM(invoice.invoiceSum) AS total_sum
+SELECT SUM(invoice.invoiceSum) AS "Summa av fakturor"
 FROM invoice
 INNER JOIN booking ON invoice.bookingNumber = booking.bookingNumber
-WHERE invoice.datum BETWEEN DATE() AND DATE();
+WHERE invoice.datum BETWEEN "2024-01-01" AND "2024-12-31";
 
 -- Lägg till faktura
 INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
