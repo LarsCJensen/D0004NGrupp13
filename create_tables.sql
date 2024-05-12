@@ -53,7 +53,7 @@ CREATE TABLE green_rental.report (
     reportID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),
     staffID INT,
-    datum DATETIME,
+    reportDate DATETIME,
     descriptionReport VARCHAR(512),
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber),
     FOREIGN KEY (staffID) REFERENCES staff(staffID)
@@ -111,8 +111,8 @@ CREATE TABLE green_rental.private_customer (
 CREATE TABLE green_rental.offer (
     offerID INT AUTO_INCREMENT PRIMARY KEY,
     descriptionOffer VARCHAR(256),
-    startDatum DATETIME,
-    endDatum DATETIME,
+    startDate DATETIME,
+    endDate DATETIME,
     freeMileage INT,
     discount INT
 );
@@ -145,7 +145,7 @@ CREATE TABLE green_rental.booking_details (
 CREATE TABLE green_rental.agreement (
     agreementID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
-    datum DATETIME,
+    agreementDate DATETIME,
     orderingParty VARCHAR(100),
     FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber)
 );
@@ -154,7 +154,7 @@ CREATE TABLE green_rental.invoice (
     invoiceNumber INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     invoiceSum FLOAT,
-    datum DATETIME,
+    invoiceDate DATETIME,
     dueDate DATETIME,
     paid BOOL,
     FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber)
