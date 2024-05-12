@@ -48,6 +48,7 @@ CREATE TABLE green_rental.staff (
     quit BOOL,
     FOREIGN KEY (stationName) REFERENCES station(stationName)
 );
+
 CREATE TABLE green_rental.report (
     reportID INT AUTO_INCREMENT PRIMARY KEY,
     registrationNumber VARCHAR(6),

@@ -31,11 +31,20 @@ UPDATE vehicle
 SET stationName = "Linköping station"
 WHERE registrationNumber = "CAG461";
 
+UPDATE vehicle
+SET stationName = "Lund station"
+WHERE registrationNumber = "AAD123";
+
+UPDATE vehicle
+SET stationName = "Lund station"
+WHERE registrationNumber = "AAC223";
+
 -- Select all cars
 SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
 FROM vehicle as v
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
 ORDER BY Station, FordonsKategori;
+
 
 -- Select all vacant cars for a station
 SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
@@ -104,14 +113,6 @@ FROM vehicle
 INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
 INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
-
--- Lägg till en skada
-INSERT INTO damage (controlID,fixedDamage,descriptionDamage)
-VALUES(1,FALSE,"Stenskott");
-
--- Lägg till en kontroll
-INSERT INTO control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
-VALUES("ABC123",1,"2024-04-21",FALSE,30);
 
 -- Underhållspersonal
 -- Administratörer
