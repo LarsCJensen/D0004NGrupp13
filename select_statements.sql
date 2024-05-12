@@ -1,6 +1,6 @@
 -- Aktörer
 
--- Uthyrningspersonal
+---- Uthyrningspersonal
 -- Sök fram alla bilar av en viss kategori på “min” station
 -- Sök fram alla bilar av en viss kategori på alla stationer
 -- Sök fram alla lediga bilar av en viss kategori på “min” station
@@ -39,31 +39,63 @@ UPDATE vehicle
 SET stationName = "Lund station"
 WHERE registrationNumber = "AAC223";
 
+-- Select all cars
+SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
+FROM vehicle as v
+INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
+ORDER BY Station, FordonsKategori;
+
+
 -- Select all vacant cars for a station
 SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
-FROM green_rental.vehicle as v
+FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND (b.endDatum < "2024-04-13" OR b.endDatum IS NULL);
+WHERE v.stationName = "Uppsala station" AND (b.endDate < "2024-04-13" OR b.endDate IS NULL)
+ORDER BY Fordonskategori;
 
 -- Select all vacant cars for all stations
 SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
-FROM green_rental.vehicle as v
+FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE b.endDatum < "2024-04-13" OR b.endDatum IS NULL;
+WHERE b.endDate < "2024-04-13" OR b.endDate IS NULL
+ORDER BY Station, Fordonskategori;
 
 -- Select all vacant cars for "my" station of a certain category
-SELECT v.registrationNumber, v.stationName FROM green_rental.vehicle as v
+SELECT v.registrationNumber, v.stationName FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDatum < "2024-04-12" OR b.endDatum IS NULL);
+WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDate < "2024-04-12" OR b.endDate IS NULL);
 
+-- Select number of cars per station
+SELECT v.stationName as Station, count(*) as "Antal bilar" 
+FROM vehicle as v GROUP BY v.stationName;
+
+-- Select all stations with vacant cars
+SELECT v.stationName as Station, count(*) as "Antal lediga bilar" 
+FROM vehicle as v 
+INNER JOIN booking as b ON v.stationName = b.stationName 
+WHERE v.registrationNumber IN 
+	(  
+		SELECT v.registrationNumber 
+        FROM vehicle as v  
+        LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber  
+        LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber  
+        INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId  
+        WHERE b.endDate < "2024-04-12" OR b.endDate IS NULL 
+	) 
+GROUP BY v.stationName;
+
+
+
+
+-- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
-SELECT vehicle.registrationNumber FROM green_rental.vehicle
+SELECT vehicle.registrationNumber FROM vehicle
 INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
 LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
 LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
@@ -71,24 +103,16 @@ WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
 
 -- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
 SELECT vehicle.registrationNumber as Registreringsnummer
-FROM green_rental.vehicle
+FROM vehicle
 LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
 WHERE control.controlLarge is TRUE or control.controlDate is NULL and control.controlDate>=DATE_ADD(CURDATE(), INTERVAL 3 MONTH);
 
 -- Sök fram alla bilar som har en skada
 SELECT vehicle.RegistrationNumber as Registreringsnummer, damage.damageID as SkadeID, damage.descriptionDamage as Beskrivning
-FROM green_rental.vehicle
+FROM vehicle
 INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
 INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
-
--- Lägg till en skada
-INSERT INTO green_rental.damage (controlID, fixedDamage, descriptionDamage)
-VALUES(1, FALSE, "Stenskott");
-
--- Lägg till en kontroll
-INSERT INTO green_rental.control (registrationNumber,staffID,controlDate,controlLarge,fuelLevel)
-VALUES("ABC123", 1, "2024-04-21", FALSE, 30);
 
 -- Underhållspersonal
 -- Administratörer
@@ -99,27 +123,27 @@ VALUES("ABC123", 1, "2024-04-21", FALSE, 30);
 -- Lägg till kampanj
 
 -- Ta fram alla fakturor under en viss period
-SELECT green_rental.invoice.invoiceNumber, green_rental.invoice.bookingNumber, green_rental.invoice.invoiceSum, green_rental.invoice.datum, green_rental.invoice.dueDate, green_rental.invoice.paid
-FROM green_rental.invoice
-LEFT JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
-WHERE green_rental.invoice.datum BETWEEN DATE() AND DATE();
+SELECT invoice.invoiceNumber, invoice.bookingNumber, invoice.invoiceSum, invoice.datum, invoice.dueDate, invoice.paid
+FROM invoice
+LEFT JOIN booking ON invoice.bookingNumber = booking.bookingNumber
+WHERE invoice.datum BETWEEN DATE() AND DATE();
 
 -- Ta fram alla obetalda fakturor
-SELECT *
-FROM green_rental.invoice
-LEFT JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
-WHERE green_rental.invoice.paid = FALSE;
+SELECT count(*) as "Antal obetalda fakturor", SUM(invoiceSum) as "Summa"
+FROM invoice
+LEFT JOIN booking ON invoice.bookingNumber = booking.bookingNumber
+WHERE invoice.paid = FALSE;
 
 -- Ta fram summan av alla fakturor för en viss period
-SELECT SUM(green_rental.invoice.invoiceSum) AS total_sum
-FROM green_rental.invoice
-INNER JOIN green_rental.booking ON green_rental.invoice.bookingNumber = green_rental.booking.bookingNumber
-WHERE green_rental.invoice.datum BETWEEN DATE() AND DATE();
+SELECT SUM(invoice.invoiceSum) AS "Summa av fakturor"
+FROM invoice
+INNER JOIN booking ON invoice.bookingNumber = booking.bookingNumber
+WHERE invoice.datum BETWEEN "2024-01-01" AND "2024-12-31";
 
 -- Lägg till faktura
-INSERT INTO green_rental.invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
 VALUES ('booking_number', 'invoice_sum', 'datum', 'due_date', 'paid_status');
 
 -- Lägg till kampanj
-INSERT INTO green_rental.offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+INSERT INTO offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
 VALUES ('description', 'start_date', 'end_date', 'free_mileage', 'discount');
