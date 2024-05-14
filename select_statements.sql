@@ -47,16 +47,17 @@ ORDER BY Station, FordonsKategori;
 
 
 -- Select all vacant cars for a station
-SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
+SELECT DISTINCT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori
 FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND (b.endDate < "2024-04-13" OR b.endDate IS NULL)
+WHERE v.stationName = "Linköping station" AND (b.endDate < "2024-04-13" OR b.endDate IS NULL)
 ORDER BY Fordonskategori;
 
+
 -- Select all vacant cars for all stations
-SELECT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
+SELECT DISTINCT v.registrationNumber as Registreringsnummer, vc.name as Fordonskategori, v.stationName as Station
 FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
@@ -64,21 +65,21 @@ INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
 WHERE b.endDate < "2024-04-13" OR b.endDate IS NULL
 ORDER BY Station, Fordonskategori;
 
+
 -- Select all vacant cars for "my" station of a certain category
-SELECT v.registrationNumber, v.stationName FROM vehicle as v
+SELECT DISTINCT v.registrationNumber, v.stationName FROM vehicle as v
 LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber
 LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber
 INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId
-WHERE v.stationName = "Uppsala station" AND vc.name = "Stadsbil" AND (b.endDate < "2024-04-12" OR b.endDate IS NULL);
+WHERE v.stationName = "Linköping station" AND vc.name = "Stadsbil" AND (b.endDate < "2024-04-12" OR b.endDate IS NULL);
 
 -- Select number of cars per station
 SELECT v.stationName as Station, count(*) as "Antal bilar" 
 FROM vehicle as v GROUP BY v.stationName;
 
 -- Select all stations with vacant cars
-SELECT v.stationName as Station, count(*) as "Antal lediga bilar" 
-FROM vehicle as v 
-INNER JOIN booking as b ON v.stationName = b.stationName 
+SELECT v.stationName as Station, count(v.registrationNumber) as "Antal lediga bilar" 
+FROM vehicle as v
 WHERE v.registrationNumber IN 
 	(  
 		SELECT v.registrationNumber 
@@ -86,7 +87,7 @@ WHERE v.registrationNumber IN
         LEFT JOIN booking_details as bd ON v.registrationNumber = bd.registrationNumber  
         LEFT JOIN booking as b ON bd.bookingNumber = b.bookingNumber  
         INNER JOIN vehicle_category as vc ON v.vehicleCategoryId = vc.vehicleCategoryId  
-        WHERE b.endDate < "2024-04-12" OR b.endDate IS NULL 
+        WHERE b.endDate < "2024-04-12" OR b.endDate IS NULL
 	) 
 GROUP BY v.stationName;
 
