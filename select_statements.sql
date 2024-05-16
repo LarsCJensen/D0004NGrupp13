@@ -96,13 +96,19 @@ GROUP BY v.stationName;
 
 -- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
-SELECT vehicle.registrationNumber FROM vehicle
+-- Sök fram alla bilar i behov av en stor kontroll
+-- Sök fram alla bilar som har en skada
+-- Lägg till en skada
+-- Lägg till en kontroll
+
+-- Sök fram alla bilar i behov av kontroll under ett visst datum
+SELECT booking.bookingNumber as Bokningsnummer, vehicle.registrationNumber as Registreringsnummer, vehicle.stationName as Station FROM vehicle
 INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
 LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
 LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
-WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
+WHERE (control.controlDate < "2024-07-28" or control.controlDate is NULL) and booking.endDate = "2024-07-28";
 
--- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
+-- Sök fram alla bilar i behov av en stor kontroll
 SELECT vehicle.registrationNumber as Registreringsnummer
 FROM vehicle
 LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
@@ -115,7 +121,6 @@ INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
 INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
 
--- Underhållspersonal
 -- Administratörer
 -- Ta fram alla fakturor under en viss period.
 -- Ta fram alla obetalda fakturor.
