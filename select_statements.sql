@@ -130,6 +130,15 @@ INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
 INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
 
+-- Lägg till en skada
+INSERT INTO damage (controlID,fixedDamage,repairedDate,descriptionDamage)
+VALUES (1,true,"2024-03-15","Glasskada");
+
+-- Lägg till en kontroll
+INSERT INTO control (registrationNumber,staffID,controlDate,fuelLevel,mileage)
+VALUES ("WVC331",1,"2024-03-01",40,500);
+
+
 -- Administratörer
 -- Ta fram alla fakturor under en viss period.
 -- Ta fram alla obetalda fakturor.
