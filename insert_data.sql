@@ -171,7 +171,7 @@ VALUES ("AKB465", @CatId_Kombi, "Lund station", "MG MG5 EV");
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("WVC331", @CatId_Transportbil, "Lund station", "WV California");
 
--- Insert vehicle data for Linköping Station Toyota iQ
+-- Insert vehicle data for Linköping Station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("KLM963", @CatId_Stadsbil, "Linköping Station", "Kia Picanto");
 
@@ -660,15 +660,77 @@ VALUES ("AKB465", @Eva, "2023-05-07", "Punktering");
 INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
 VALUES ("VBX479", @Anna, "2024-02-01", "Repa");
 
--- Insert control data
+-- Insert initial large vehicle control data for car located at Uppsala station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ABC123", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAC223", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAB222", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAD123", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ADA321", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LLD914", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KBA321", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CAG461", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CWV737", @Oscar, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("SMM346", @Oscar, "2023-01-01", true, 100);
+
+-- Insert initial large vehicle control data for car located at Lund Station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CBA321",  @Jonas, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("EDF774",  @Jonas, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("FED575", @Jonas, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KLT369", @Jonas, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AKB465", @Jonas, "2023-01-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("WVC331", @Jonas, "2023-01-01", true, 100);
+
+-- Insert initial large vehicle control data for car located at Linköping Station
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("CAG461", @Oscar, "2024-03-01", false, 50);
+VALUES ("KLM963", @Andreas, "2023-01-01", true, 100);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("AKB465", @Jonas, "2024-06-01", false, 100);
+VALUES ("LKT752", @Andreas, "2023-01-01", true, 100);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("SDL176", @Andreas, "2024-09-01", true, 75);
+VALUES ("CTS213", @Andreas, "2023-01-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("RTP317", @Andreas, "2023-01-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("VBX479", @Andreas, "2023-01-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LMD994", @Andreas, "2023-01-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("SDL176", @Andreas, "2023-01-01", true, 100);
 
 -- Assign controlID to variables instead of hardcoded values
 SELECT controlID INTO @CAG461Ctrl
