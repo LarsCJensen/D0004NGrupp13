@@ -852,33 +852,33 @@ VALUES ("SDL176", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100
 
 -- Insert small vehicle control data after a booking, for cars located at Uppsala station
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("ADA321", @Jenny, "2024-11-21", false, 25)
+VALUES ("ADA321", @Jenny, "2024-11-21", false, 25);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("CAG461", @Jenny, "2024-02-18", false, 50)
+VALUES ("CAG461", @Jenny, "2024-02-18", false, 50);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("AAD123", @Jenny, "2024-07-01", false, 75)
+VALUES ("AAD123", @Jenny, "2024-07-01", false, 75);
 
 -- Insert small vehicle control data after a booking, for cars located at Lund Station
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("KLT369", @Lisa, "2024-04-12", false, 25)
+VALUES ("KLT369", @Lisa, "2024-04-12", false, 25);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("CBA321", @Lisa, "2023-05-07", false, 50)
+VALUES ("CBA321", @Lisa, "2023-05-07", false, 50);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("WVC331", @Lisa, "2024-05-31", false, 75)
+VALUES ("WVC331", @Lisa, "2024-05-31", false, 75);
 
 -- Insert small vehicle control data after a booking, for cars located at Linköping Station
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("KLM963", @Malin, "2023-03-30", false, 25)
+VALUES ("KLM963", @Malin, "2023-03-30", false, 25);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("SDL176", @Malin, "2023-05-07", false, 50)
+VALUES ("SDL176", @Malin, "2023-05-07", false, 50);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
-VALUES ("LMD994", @Malin, "2024-02-01", false, 75)
+VALUES ("LMD994", @Malin, "2024-02-01", false, 75);
 
 -- Assign controlID to variables instead of hardcoded values
 SELECT controlID INTO @CAG461Ctrl
