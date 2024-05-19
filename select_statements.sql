@@ -99,9 +99,10 @@ GROUP BY v.stationName;
 -- Lägg till en kontroll
 
 -- Sök fram alla bilar i behov av kontroll under ett visst datum
-SELECT booking.bookingNumber as Bokningsnummer, vehicle.registrationNumber as Registreringsnummer, vehicle.stationName as Station FROM vehicle
+SELECT DISTINCT vehicle.registrationNumber as Registreringsnummer, booking.bookingNumber as Bokningsnummer,
+vehicle.stationName as Station, booking.endDate as bokning_slutdatum FROM vehicle
 INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
-LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
+INNER JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
 LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
 WHERE (control.controlDate < "2024-07-28" or control.controlDate is NULL) and booking.endDate = "2024-07-28";
 
