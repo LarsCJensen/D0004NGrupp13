@@ -171,7 +171,7 @@ VALUES ("AKB465", @CatId_Kombi, "Lund station", "MG MG5 EV");
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("WVC331", @CatId_Transportbil, "Lund station", "WV California");
 
--- Insert vehicle data for Linköping Station Toyota iQ
+-- Insert vehicle data for Linköping Station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
 VALUES ("KLM963", @CatId_Stadsbil, "Linköping Station", "Kia Picanto");
 
@@ -290,6 +290,10 @@ SELECT orgNumber INTO @SoltunnaEnergi
 FROM business_customer
 WHERE name = 'Soltunna Energi AB';
 
+SELECT personalIdentificationNumber INTO @AndersLarsson
+FROM private_customer
+WHERE firstName = "Anders" and lastName = "Larsson"; 
+
 -- Insert business_customer booking data
 INSERT INTO booking (stationName, orgNumber, startDate, endDate, commentBooking, driverLicenseCheck, cost)
 VALUES("Lund station", @Rökepipan, "2024-04-10", "2024-04-12", "Weekendbokning", True, 998);
@@ -373,14 +377,20 @@ WHERE orgNumber = @EcoTech
 AND startDate = "2024-01-01"
 AND endDate = "2024-02-01";
 
+SELECT bookingNumber INTO @AndersLarsson
+FROM booking
+WHERE personalIdentificationNumber = @AndersLarsson
+AND startDate = "2024-07-22"
+AND endDate = "2024-07-28";
+
 -- Insert agreement data
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@RökepipanBooking, "2024-04-10", "@TODO");
 
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@TeknikHjälpBooking, "2023-11-14", "@TODO");
 
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@ByggMästarnaBooking, "2023-05-01", "@TODO");
 
 -- Insert booking details for each business_customer booking
@@ -421,31 +431,31 @@ INSERT INTO booking_details (bookingNumber,registrationNumber)
 VALUES(24,"CTS213");
 
 -- Insert invoice data for business_customer
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@RökepipanBooking, 998, "2024-04-12", DATE_ADD("2024-04-12", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@EcoTechBooking, 3493, "2023-05-07", DATE_ADD("2023-05-07", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@WheelsBooking, 9999, "2024-05-31", DATE_ADD("2024-05-31", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@TeknikHjälpBooking, 3493, "2024-11-21", DATE_ADD("2024-11-21", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@GreenGardensBooking, 3493, "2024-02-18", DATE_ADD("2024-02-18", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@SoltunnaEnergiBooking, 9999, "2024-07-01", DATE_ADD("2024-07-01", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@WheelsBooking2, 9999, "2023-03-30", DATE_ADD("2023-03-30", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@ByggMästarnaBooking, 3493, "2023-05-07", DATE_ADD("2023-05-07", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@EcoTechBooking2, 9999, "2024-02-01", DATE_ADD("2024-02-01", INTERVAL 30 DAY), false);
 
 -- Assign personalIdentificationNumber to variables instead of hardcoded values
@@ -510,22 +520,22 @@ FROM private_customer
 WHERE firstName = 'Anders' AND lastName = 'Larsson';
 
 -- Insert offer data
-INSERT INTO offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+INSERT INTO offer (descriptionOffer, startDate, endDate, freeMileage, discount)
 VALUES ("Weekendresa", "2023-07-29", "2023-07-30", 50, 199);
 
-INSERT INTO offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+INSERT INTO offer (descriptionOffer, startDate, endDate, freeMileage, discount)
 VALUES ("Familjeresa", "2024-04-01", "2024-04-07", 100, 399);
 
 -- Assign offerID to variables instead of hardcoded values
 SELECT offerID INTO @Weekendresa
 FROM offer
-WHERE startDatum = '2023-07-29'
-AND endDatum = '2023-07-30';
+WHERE startDate = '2023-07-29'
+AND endDate = '2023-07-30';
 
 SELECT offerID INTO @Familjeresa
 FROM offer
-WHERE startDatum = '2024-04-01'
-AND endDatum = '2024-04-07';
+WHERE startDate = '2024-04-01'
+AND endDate = '2024-04-07';
 
 -- Insert private_customer booking data
 INSERT INTO booking (stationName, personalIdentificationNumber, startDate, endDate, commentBooking, driverLicenseCheck, cost)
@@ -634,6 +644,55 @@ SELECT bookingNumber INTO @AndersLBooking
 FROM booking
 WHERE personalIdentificationNumber = @AndersL;
 
+-- Insert booking details for each private_customer booking
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@MaxBBooking, "ABC123");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@FridaABooking, "AAC223");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@SagaNBooking, "LLD914");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@DavidJBooking, "CWV737");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@EmmaABooking, "SMM346");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@ErikPBooking, "KLM963");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AnnaLBooking, "LKT752");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@LisaABooking, "CTS213");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@ErikSBooking, "LMD994");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AnnaJBooking, "SDL176");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@PeterNBooking, "CBA321");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@SaraKBooking, "EDF774");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@JonasPBooking, "FED575");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@EmmaGBooking, "AKB465");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AndersLBooking, "WVC331");
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AndersLBooking, "RTP317");
+
 -- Assign staffId to variables instead of hardcoded values
 SELECT staffID INTO @Sara
 FROM staff
@@ -660,13 +719,13 @@ FROM staff
 WHERE firstName = 'Andreas' AND lastName = 'Svensson';
 
 -- Insert report data
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("AAB222", @Sara, "2024-11-21", "Stenskott");
 
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("AKB465", @Eva, "2023-05-07", "Punktering");
 
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("VBX479", @Anna, "2024-02-01", "Repa");
 
 -- Insert control data
@@ -747,6 +806,180 @@ VALUES ("WVC331", 1, "2024-10-01", false, 60, 1600);
 
 INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
 VALUES ("WVC331", 1, "2024-03-01", false, 40, 500);
+
+-- Insert initial large vehicle control data for car located at Uppsala station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ABC123", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAC223", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAB222", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAD123", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ADA321", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LLD914", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KBA321", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CAG461", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CWV737", @Oscar, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("SMM346", @Oscar, "2022-06-01", true, 100);
+
+-- Insert initial large vehicle control data for car located at Lund Station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CBA321",  @Jonas, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("EDF774",  @Jonas, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("FED575", @Jonas, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KLT369", @Jonas, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AKB465", @Jonas, "2022-06-01", true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("WVC331", @Jonas, "2022-06-01", true, 100);
+
+-- Insert initial large vehicle control data for car located at Linköping Station
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("KLM963", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LKT752", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("CTS213", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("RTP317", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("VBX479", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LMD994", @Andreas, "2022-06-01", true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("SDL176", @Andreas, "2022-06-01", true, 100);
+
+-- Insert 2nd (18month) large vehicle control data for car located at Uppsala station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ABC123", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAC223", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAB222", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AAD123", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("ADA321", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("LLD914", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KBA321", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CAG461", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CWV737", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("SMM346", @Oscar, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+-- Insert 2nd (18month) large vehicle control data for car located at Lund Station
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("CBA321",  @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("EDF774",  @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("FED575", @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("KLT369", @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("AKB465", @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
+VALUES ("WVC331", @Jonas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+-- Insert 2nd (18month) large vehicle control data for car located at Linköping Station
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("KLM963", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LKT752", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("CTS213", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("RTP317", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("VBX479", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LMD994", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("SDL176", @Andreas, DATE_ADD("2022-06-01", INTERVAL 18 MONTH), true, 100);
+
+-- Insert small vehicle control data after a booking, for cars located at Uppsala station
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("ADA321", @Jenny, "2024-11-21", false, 25);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("CAG461", @Jenny, "2024-02-18", false, 50);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("AAD123", @Jenny, "2024-07-01", false, 75);
+
+-- Insert small vehicle control data after a booking, for cars located at Lund Station
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("KLT369", @Lisa, "2024-04-12", false, 25);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("CBA321", @Lisa, "2023-05-07", false, 50);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("WVC331", @Lisa, "2024-05-31", false, 75);
+
+-- Insert small vehicle control data after a booking, for cars located at Linköping Station
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("KLM963", @Malin, "2023-03-30", false, 25);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("SDL176", @Malin, "2023-05-07", false, 50);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel)
+VALUES ("LMD994", @Malin, "2024-02-01", false, 75);
 
 -- Assign controlID to variables instead of hardcoded values
 SELECT controlID INTO @CAG461Ctrl

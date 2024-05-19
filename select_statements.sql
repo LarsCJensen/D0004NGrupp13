@@ -7,14 +7,17 @@
 -- Sök fram alla lediga bilar av en viss kategori på alla stationer
 
 -- Avboka bokning
--- Lägg till DELETE satser
+DELETE FROM booking
+WHERE stationName = "Lund station"
+AND personalIdentificationNumber = "930320-4567"
+AND startDate = "2024-07-22";
 
 -- Uppdatera bokning med nytt datum
 UPDATE booking
-SET endDatum = "2024-05-06"
+SET endDate = "2023-11-07"
 WHERE stationName = "Uppsala station"
-AND personalIdentificationNumber = "900530-1234"
-AND startDatum = "2024-05-04";
+AND personalIdentificationNumber = "801103-1234"
+AND startDate = "2023-11-04";
 
 UPDATE booking
 SET endDatum = "2024-06-30", cost = "19998"
