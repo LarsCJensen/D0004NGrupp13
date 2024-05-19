@@ -94,22 +94,38 @@ WHERE v.registrationNumber IN
 	) 
 GROUP BY v.stationName;
 
-
-
-
 -- Underhållspersonal
 -- Sök fram alla bilar i behov av kontroll
-SELECT vehicle.registrationNumber FROM vehicle
-INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
-LEFT JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
-LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
-WHERE control.datum < "2024-04-12" and booking.endDate = "2024-04-12";
+-- Sök fram alla bilar i behov av en stor kontroll
+-- Sök fram alla bilar som har en skada
+-- Lägg till en skada
+-- Lägg till en kontroll
 
--- Sök fram alla bilar i behov av kontroll inom 3/6/12 månader
-SELECT vehicle.registrationNumber as Registreringsnummer
+-- Sök fram alla bilar i behov av kontroll under ett visst datum
+SELECT DISTINCT vehicle.registrationNumber as Registreringsnummer, booking.bookingNumber as Bokningsnummer,
+vehicle.stationName as Station, booking.endDate as bokning_slutdatum FROM vehicle
+INNER JOIN booking_details ON vehicle.registrationNumber = booking_details.registrationNumber
+INNER JOIN booking ON booking_details.bookingNumber = booking.bookingNumber
+LEFT JOIN control ON vehicle.registrationNumber=control.registrationNumber
+WHERE (control.controlDate < "2024-07-28" or control.controlDate is NULL) and booking.endDate = "2024-07-28";
+
+-- Sök fram alla bilar i behov av en stor kontroll
+SELECT 
+    vehicle.registrationNumber AS Registreringsnummer,
+    vehicle.stationName AS Station,
+    MAX(control.controlDate) AS Senaste_Kontroll,
+    MAX(CASE WHEN control.controlLarge IS TRUE THEN control.controlDate ELSE NULL END) AS Senaste_Stora_Kontroll,
+    MAX(control.mileage) AS Senaste_Miltal,
+    MAX(CASE WHEN control.controlLarge IS TRUE THEN control.mileage ELSE NULL END) AS Miltal_Vid_Senaste_Stora_Kontroll
 FROM vehicle
-LEFT JOIN control ON control.registrationNumber=vehicle.registrationNumber
-WHERE control.controlLarge is TRUE or control.controlDate is NULL and control.controlDate>=DATE_ADD(CURDATE(), INTERVAL 3 MONTH);
+LEFT JOIN control ON control.registrationNumber = vehicle.registrationNumber
+GROUP BY vehicle.registrationNumber, vehicle.stationName
+HAVING 
+    Senaste_Kontroll IS NOT NULL
+    AND Senaste_Stora_Kontroll IS NOT NULL
+    AND ((Senaste_Miltal - Miltal_Vid_Senaste_Stora_Kontroll) >=1500
+    OR Senaste_Stora_Kontroll <= DATE_SUB(CURDATE(),INTERVAL 18 month))
+ORDER BY Registreringsnummer;
 
 -- Sök fram alla bilar som har en skada
 SELECT vehicle.RegistrationNumber as Registreringsnummer, damage.damageID as SkadeID, damage.descriptionDamage as Beskrivning
@@ -118,7 +134,15 @@ INNER JOIN control ON control.registrationNumber=vehicle.registrationNumber
 INNER JOIN damage ON damage.controlID=control.controlID
 WHERE damage.repairedDate is NULL;
 
--- Underhållspersonal
+-- Lägg till en skada
+INSERT INTO damage (controlID,fixedDamage,repairedDate,descriptionDamage)
+VALUES (1,true,"2024-03-15","Glasskada");
+
+-- Lägg till en kontroll
+INSERT INTO control (registrationNumber,staffID,controlDate,fuelLevel,mileage)
+VALUES ("WVC331",1,"2024-03-01",40,500);
+
+
 -- Administratörer
 -- Ta fram alla fakturor under en viss period.
 -- Ta fram alla obetalda fakturor.

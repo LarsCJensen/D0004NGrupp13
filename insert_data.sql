@@ -421,6 +421,15 @@ VALUES(@ByggMästarnaBooking, "SDL176");
 INSERT INTO booking_details (bookingNumber, registrationNumber)
 VALUES(@EcoTechBooking2, "LMD994");
 
+INSERT INTO booking_details (bookingNumber,registrationNumber)
+VALUES(14,"AAC223");
+INSERT INTO booking_details (bookingNumber,registrationNumber)
+VALUES(17,"CTS213");
+INSERT INTO booking_details (bookingNumber,registrationNumber)
+VALUES(22,"AKB465");
+INSERT INTO booking_details (bookingNumber,registrationNumber)
+VALUES(24,"CTS213");
+
 -- Insert invoice data for business_customer
 INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@RökepipanBooking, 998, "2024-04-12", DATE_ADD("2024-04-12", INTERVAL 30 DAY), false);
@@ -718,6 +727,85 @@ VALUES ("AKB465", @Eva, "2023-05-07", "Punktering");
 
 INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("VBX479", @Anna, "2024-02-01", "Repa");
+
+-- Insert control data
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2024-02-01", false, 50, 1500);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2022-06-01", true, 75, 10);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2023-02-07", false, 50, 450);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2023-09-24", false, 60, 600);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2022-09-01", false, 60, 232);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("CAG461", @Oscar, "2023-06-01", false, 41, 550);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-06-01", false, 100, 2400);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2023-01-01", true, 100, 0);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2023-05-01", false, 70, 200);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2023-09-01", false, 80, 500);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2023-11-01", false, 60, 1100);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-01-01", true, 40, 1550);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-02-01", false, 60, 1800);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-03-01", false, 23, 2300);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-04-01", false, 76, 2700);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("AKB465", @Jonas, "2024-05-01", false, 83, 3200);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("SDL176", @Andreas, "2023-05-07", false, 75, 2500);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("SDL176", @Andreas, "2022-01-01", true, 100, 0);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("SDL176", @Andreas, "2022-03-01", false, 80, 300);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("SDL176", @Andreas, "2022-06-01", false, 78, 1200);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("SDL176", @Andreas, "2022-10-01", false, 67, 1800);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("WVC331", 1, "2024-05-31", false, 30, 775);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("WVC331", 1, "2024-01-01", true, 70, 0);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("WVC331", 1, "2024-07-01", false, 80, 900);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("WVC331", 1, "2024-10-01", false, 60, 1600);
+
+INSERT INTO control (registrationNumber, staffID, controlDate, controlLarge, fuelLevel, mileage)
+VALUES ("WVC331", 1, "2024-03-01", false, 40, 500);
 
 -- Insert initial large vehicle control data for car located at Uppsala station
 INSERT INTO vehicle (registrationNumber, vehicleCategoryId, stationName, model)
