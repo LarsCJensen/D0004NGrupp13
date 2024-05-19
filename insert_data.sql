@@ -290,6 +290,10 @@ SELECT orgNumber INTO @SoltunnaEnergi
 FROM business_customer
 WHERE name = 'Soltunna Energi AB';
 
+SELECT personalIdentificationNumber INTO @AndersLarsson
+FROM private_customer
+WHERE firstName = "Anders" and lastName = "Larsson"; 
+
 -- Insert business_customer booking data
 INSERT INTO booking (stationName, orgNumber, startDate, endDate, commentBooking, driverLicenseCheck, cost)
 VALUES("Lund station", @Rökepipan, "2024-04-10", "2024-04-12", "Weekendbokning", True, 998);
@@ -372,6 +376,12 @@ FROM booking
 WHERE orgNumber = @EcoTech
 AND startDate = "2024-01-01"
 AND endDate = "2024-02-01";
+
+SELECT bookingNumber INTO @AndersLarsson
+FROM booking
+WHERE personalIdentificationNumber = @AndersLarsson
+AND startDate = "2024-07-22"
+AND endDate = "2024-07-28";
 
 -- Insert agreement data
 INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
@@ -624,6 +634,9 @@ WHERE personalIdentificationNumber = @EmmaG;
 SELECT bookingNumber INTO @AndersLBooking
 FROM booking
 WHERE personalIdentificationNumber = @AndersL;
+
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AndersLBooking, "RTP317");
 
 -- Assign staffId to variables instead of hardcoded values
 SELECT staffID INTO @Sara
