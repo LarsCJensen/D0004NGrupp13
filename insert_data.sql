@@ -290,6 +290,10 @@ SELECT orgNumber INTO @SoltunnaEnergi
 FROM business_customer
 WHERE name = 'Soltunna Energi AB';
 
+SELECT personalIdentificationNumber INTO @AndersLarsson
+FROM private_customer
+WHERE firstName = "Anders" and lastName = "Larsson"; 
+
 -- Insert business_customer booking data
 INSERT INTO booking (stationName, orgNumber, startDate, endDate, commentBooking, driverLicenseCheck, cost)
 VALUES("Lund station", @Rökepipan, "2024-04-10", "2024-04-12", "Weekendbokning", True, 998);
@@ -373,14 +377,20 @@ WHERE orgNumber = @EcoTech
 AND startDate = "2024-01-01"
 AND endDate = "2024-02-01";
 
+SELECT bookingNumber INTO @AndersLarsson
+FROM booking
+WHERE personalIdentificationNumber = @AndersLarsson
+AND startDate = "2024-07-22"
+AND endDate = "2024-07-28";
+
 -- Insert agreement data
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@RökepipanBooking, "2024-04-10", "@TODO");
 
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@TeknikHjälpBooking, "2023-11-14", "@TODO");
 
-INSERT INTO agreement (bookingNumber, datum, orderingParty)
+INSERT INTO agreement (bookingNumber, agreementDate, orderingParty)
 VALUES (@ByggMästarnaBooking, "2023-05-01", "@TODO");
 
 -- Insert booking details for each business_customer booking
@@ -412,31 +422,31 @@ INSERT INTO booking_details (bookingNumber, registrationNumber)
 VALUES(@EcoTechBooking2, "LMD994");
 
 -- Insert invoice data for business_customer
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@RökepipanBooking, 998, "2024-04-12", DATE_ADD("2024-04-12", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@EcoTechBooking, 3493, "2023-05-07", DATE_ADD("2023-05-07", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@WheelsBooking, 9999, "2024-05-31", DATE_ADD("2024-05-31", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@TeknikHjälpBooking, 3493, "2024-11-21", DATE_ADD("2024-11-21", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@GreenGardensBooking, 3493, "2024-02-18", DATE_ADD("2024-02-18", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@SoltunnaEnergiBooking, 9999, "2024-07-01", DATE_ADD("2024-07-01", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@WheelsBooking2, 9999, "2023-03-30", DATE_ADD("2023-03-30", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@ByggMästarnaBooking, 3493, "2023-05-07", DATE_ADD("2023-05-07", INTERVAL 30 DAY), false);
 
-INSERT INTO invoice (bookingNumber, invoiceSum, datum, dueDate, paid)
+INSERT INTO invoice (bookingNumber, invoiceSum, invoiceDate, dueDate, paid)
 VALUES(@EcoTechBooking2, 9999, "2024-02-01", DATE_ADD("2024-02-01", INTERVAL 30 DAY), false);
 
 -- Assign personalIdentificationNumber to variables instead of hardcoded values
@@ -501,22 +511,22 @@ FROM private_customer
 WHERE firstName = 'Anders' AND lastName = 'Larsson';
 
 -- Insert offer data
-INSERT INTO offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+INSERT INTO offer (descriptionOffer, startDate, endDate, freeMileage, discount)
 VALUES ("Weekendresa", "2023-07-29", "2023-07-30", 50, 199);
 
-INSERT INTO offer (descriptionOffer, startDatum, endDatum, freeMileage, discount)
+INSERT INTO offer (descriptionOffer, startDate, endDate, freeMileage, discount)
 VALUES ("Familjeresa", "2024-04-01", "2024-04-07", 100, 399);
 
 -- Assign offerID to variables instead of hardcoded values
 SELECT offerID INTO @Weekendresa
 FROM offer
-WHERE startDatum = '2023-07-29'
-AND endDatum = '2023-07-30';
+WHERE startDate = '2023-07-29'
+AND endDate = '2023-07-30';
 
 SELECT offerID INTO @Familjeresa
 FROM offer
-WHERE startDatum = '2024-04-01'
-AND endDatum = '2024-04-07';
+WHERE startDate = '2024-04-01'
+AND endDate = '2024-04-07';
 
 -- Insert private_customer booking data
 INSERT INTO booking (stationName, personalIdentificationNumber, startDate, endDate, commentBooking, driverLicenseCheck, cost)
@@ -671,6 +681,9 @@ VALUES(@EmmaGBooking, "AKB465");
 INSERT INTO booking_details (bookingNumber, registrationNumber)
 VALUES(@AndersLBooking, "WVC331");
 
+INSERT INTO booking_details (bookingNumber, registrationNumber)
+VALUES(@AndersLBooking, "RTP317");
+
 -- Assign staffId to variables instead of hardcoded values
 SELECT staffID INTO @Sara
 FROM staff
@@ -697,13 +710,13 @@ FROM staff
 WHERE firstName = 'Andreas' AND lastName = 'Svensson';
 
 -- Insert report data
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("AAB222", @Sara, "2024-11-21", "Stenskott");
 
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("AKB465", @Eva, "2023-05-07", "Punktering");
 
-INSERT INTO report (registrationNumber, staffID, datum, descriptionReport)
+INSERT INTO report (registrationNumber, staffID, reportDate, descriptionReport)
 VALUES ("VBX479", @Anna, "2024-02-01", "Repa");
 
 -- Insert initial large vehicle control data for car located at Uppsala station
