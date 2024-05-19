@@ -26,10 +26,10 @@ CREATE TABLE green_rental.vehicle (
   vehicleCategoryId INT NOT NULL,
   model VARCHAR(32) NOT NULL,
   FOREIGN KEY (stationName) REFERENCES station(stationName)
-  ON DELETE NO ACTION -- Create test for this
+  ON DELETE NO ACTION
   ON UPDATE NO ACTION,
   FOREIGN KEY (vehicleCategoryId) REFERENCES vehicle_category(vehicleCategoryId)
-  ON DELETE NO ACTION -- Create test for this
+  ON DELETE NO ACTION
   ON UPDATE NO ACTION
 );
 
@@ -138,7 +138,8 @@ CREATE TABLE green_rental.booking_details (
     bookingDetailsID INT AUTO_INCREMENT PRIMARY KEY,
     bookingNumber INT,
     registrationNumber VARCHAR(6),
-    FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber),
+    FOREIGN KEY (bookingNumber) REFERENCES booking(bookingNumber)
+    ON DELETE CASCADE,	
     FOREIGN KEY (registrationNumber) REFERENCES vehicle(registrationNumber)
 );
 
